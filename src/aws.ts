@@ -11,8 +11,7 @@ export const dynamodbCreateTable = async (params: AWS.DynamoDB.CreateTableInput)
         const result = await dynamodb.createTable(params).promise();
         console.log('Table created',result);
         return result;
-    }
-    catch(e)
+    } catch(e)
     {
         if(e instanceof Error)
         {
@@ -23,7 +22,21 @@ export const dynamodbCreateTable = async (params: AWS.DynamoDB.CreateTableInput)
 }
 
 //describe a table
-
+export const dynamodbDescribeTable = async (tableName: string) => {
+    try {
+        const table = await dynamodb.describeTable ({
+            TableName: tableName
+        }).promise();
+        console.log('Table retrieved', table);
+        return table;
+    } catch(e) {
+        if(e instanceof Error)
+        {
+            return e
+        }
+        throw new Error('dynamodbDescribeTable error object unknown type');
+    }
+}
 
 //delete a table 
 
