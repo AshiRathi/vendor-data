@@ -10,7 +10,7 @@ const init = async () => {
     {
         //DELETE THE TABLE
         await dynamodbDeleteTable(vendorsTableName);
-        delay(6000);
+        await delay(6000);
     }
     const vendorsTableParams: AWS.DynamoDB.CreateTableInput = {
         TableName: vendorsTableName,
@@ -26,10 +26,19 @@ const init = async () => {
         }
     }
     await dynamodbCreateTable(vendorsTableParams);
-    delay(6000);
+    await delay(6000);
 
-    const firstVendor = vendors[0]; 
-    dynamodbCreateRecord(vendorsTableName, firstVendor);
+    // const firstVendor = vendors[0]; 
+    for(const i in vendors)
+    {
+        const vendor = vendors[i];
+        const res = await dynamodbCreateRecord(vendorsTableName, vendor);
+        if(res instanceof Error)
+        {
+            console.log('Error:', vendor, res);
+        }
+    }
+    // dynamodbCreateRecord(vendorsTableName, firstVendor);
 }
 
 init();

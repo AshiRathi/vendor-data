@@ -70,7 +70,7 @@ export const dynamodbCreateRecord = async (tableName: string, vendor: Vendor) =>
     } catch(e) {
         if(e instanceof Error)
         {
-            throw e
+            return e
         }
         throw new Error('dynamodbCreateRecord error object unknown type');
     }
