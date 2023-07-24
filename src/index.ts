@@ -1,9 +1,17 @@
-import { dynamodbCreateTable , dynamodbDescribeTable} from "./aws";
+import { dynamodbCreateTable , dynamodbDescribeTable, dynamodbDeleteTable, dynamodbCreateRecord} from "./aws";
 
+import vendors from './data/vendors';
+
+const delay = (ms: number) => new Promise(res => setTimeout(res, ms));
 const init = async () => {
     const vendorsTableName = 'vendors';
-    await dynamodbDescribeTable(vendorsTableName);
-    
+    const vendorsTable = await dynamodbDescribeTable(vendorsTableName);
+    if(!(vendorsTable instanceof Error))
+    {
+        //DELETE THE TABLE
+        await dynamodbDeleteTable(vendorsTableName);
+        delay(6000);
+    }
     const vendorsTableParams: AWS.DynamoDB.CreateTableInput = {
         TableName: vendorsTableName,
         KeySchema: [
@@ -17,8 +25,11 @@ const init = async () => {
             WriteCapacityUnits: 10
         }
     }
-    // dynamodbCreateTable(vendorsTableParams);
+    await dynamodbCreateTable(vendorsTableParams);
+    delay(6000);
 
+    const firstVendor = vendors[0]; 
+    dynamodbCreateRecord(vendorsTableName, firstVendor);
 }
 
 init();
