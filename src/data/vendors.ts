@@ -1,10 +1,10 @@
 import { Vendor } from '../types/twitter';
 
 const vendors: Vendor[] = [{
-    name: 'Farris Ismati',
-    image: 'https://pbs.twimg.com/profile_images/1619823390935728128/euNmHNOw_400x400.jpg',
+    name: 'abcd defg',
+    image: 'https://pbs.twimg.com/profile_images/1683511715386863619/loEMVFHE_400x400.png',
     description: 'Teaching software engineering, but currently just a food truck',
-    twitterId: 'farristeach',
+    twitterId: 'roughworkcopy',
     tweets: [],
     created: Date.now(),
     updated: Date.now(),
